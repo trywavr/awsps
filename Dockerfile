@@ -25,7 +25,7 @@ RUN yum install -y \
 
 RUN yum groupinstall -y "Development Tools" "Development Libraries"
 
-RUN sudo curl -sSL http://get.haskellstack.org/ | sh
+RUN sudo curl -sSL https://get.haskellstack.org/ | sh
 
 RUN yum install git
 
