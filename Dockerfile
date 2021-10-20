@@ -50,3 +50,11 @@ WORKDIR /project/spago
 RUN make
 
 RUN make install
+
+RUN which purs
+
+RUN whereis purs
+
+RUN which spago
+
+RUN whereis spago
