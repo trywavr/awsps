@@ -4,5 +4,7 @@ jobs:
   container-job:
     runs-on: ubuntu-latest
     steps:
-      - name: Build image
+      - name: Check out repository code
+        uses: actions/checkout@v2
+      - name: Install dependencies
       - run: docker build -t awsps .
