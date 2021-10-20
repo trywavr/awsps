@@ -1,0 +1,8 @@
+name: Unit tests
+on: push
+jobs:
+  container-job:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Build image
+      - run: docker build -t awsps .
