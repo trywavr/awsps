@@ -29,4 +29,24 @@ RUN sudo curl -sSL https://get.haskellstack.org/ | sh
 
 RUN yum install git
 
+RUN mkdir /project
+
+WORKDIR /project
+
 RUN git clone https://github.com/purescript/purescript
+
+WORKDIR /project/purescript
+
+RUN stack build
+
+RUN stack install
+
+WORKDIR /project
+
+RUN git clone https://github.com/purescript/spago
+
+WORKDIR /project/spago
+
+RUN make
+
+RUN make install
