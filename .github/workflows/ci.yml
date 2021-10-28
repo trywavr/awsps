@@ -12,9 +12,15 @@ jobs:
     - name: Build the Docker image
       run: docker build . --file Dockerfile --tag awsps
     - name: Copy spago
-      run: docker cp awsps:/root/.local/bin/spago spago
+      run: |
+        id=$(docker create awsps)
+        docker cp $id:/root/.local/bin/spago - > spago
+        docker rm -v $id
     - name: Copy purs
-      run: docker cp awsps:/root/.local/bin/purs purs
+      run: |
+        id=$(docker create awsps)
+        docker cp $id:/root/.local/bin/purs - > purs
+        docker rm -v $id
     - uses: actions/upload-artifact@v2
       with:
         name: spago-u1604
