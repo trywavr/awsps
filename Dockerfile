@@ -1,33 +1,19 @@
-FROM amazonlinux:2.0.20191217.0
+FROM ubuntu:16.04
 
-SHELL ["/bin/bash", "--rcfile", "~/.profile", "-c"]
+RUN ldd --version
 
-################################
-#### Switching to root user
-################################
+RUN apt-get update
 
-USER root
+RUN apt-get -y install locales
 
-# Saving default system libraries before doing anything else
-RUN du -a /lib64 /usr/lib64 | cut -f2 > /root/default-libraries
+RUN sed -i '/en_US.UTF-8/s/^# //g' /etc/locale.gen && locale-gen
+ENV LANG en_US.UTF-8  
+ENV LANGUAGE en_US:en  
+ENV LC_ALL en_US.UTF-8     
 
-# Installing basic dependencies
-RUN yum install -y \
-    git-core \
-    tar \
-    sudo \
-    xz \
-    make \
-    gmp-devel \
-    postgresql-devel \
-    libicu libicu-devel \
-    libyaml libyaml-devel
+RUN apt-get install -y git curl
 
-RUN yum groupinstall -y "Development Tools" "Development Libraries"
-
-RUN sudo curl -sSL https://get.haskellstack.org/ | sh
-
-RUN yum install git
+RUN curl -sSL https://get.haskellstack.org/ | sh
 
 RUN mkdir /project
 
@@ -51,10 +37,4 @@ RUN make
 
 RUN make install
 
-RUN which purs
-
-RUN whereis purs
-
-RUN which spago
-
-RUN whereis spago
+RUN ls /root/.local/bin
